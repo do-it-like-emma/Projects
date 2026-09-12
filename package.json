@@ -1,0 +1,29 @@
+{
+  "name": "emmanuel-danquah-console",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Engineering portfolio built as a console: streaming run views, diff review flows, keyboard-driven navigation.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "check:drafts": "node scripts/check-drafts.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.5",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.17.0",
+    "eslint-config-next": "16.3.5",
+    "tailwindcss": "4.3.3",
+    "typescript": "^5.7.0"
+  }
+}

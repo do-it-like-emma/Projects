@@ -1,0 +1,218 @@
+@import "tailwindcss";
+
+/* ───────────────────────────────────────────────────────────────────────────
+   Design tokens. Light is defined on bare :root so it is always the base;
+   dark is layered on top for both the system preference and an explicit
+   [data-theme] choice, so the toggle wins in either direction.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --bg: #fbfbfa;
+  --bg-panel: #ffffff;
+  --bg-inset: #f4f4f2;
+  --bg-hover: #efefec;
+  --border: #e2e2dd;
+  --border-strong: #cfcfc8;
+  --text: #17171a;
+  --text-muted: #63636b;
+  --text-faint: #6b6b73;
+  --accent: #1d4ed8;
+  --accent-fg: #ffffff;
+  --ok: #15803d;
+  --warn: #a16207;
+  --danger: #b91c1c;
+  --add-bg: #e6f4ea;
+  --add-fg: #14532d;
+  --del-bg: #fdeaea;
+  --del-fg: #7f1d1d;
+
+  --radius: 6px;
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, sans-serif;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d0d0f;
+    --bg-panel: #141417;
+    --bg-inset: #1a1a1f;
+    --bg-hover: #212128;
+    --border: #26262d;
+    --border-strong: #3a3a44;
+    --text: #ececf0;
+    --text-muted: #9c9caa;
+    --text-faint: #8f8f9e;
+    --accent: #7aa2ff;
+    --accent-fg: #0d0d0f;
+    --ok: #4ade80;
+    --warn: #fbbf24;
+    --danger: #f87171;
+    --add-bg: #0f2d1c;
+    --add-fg: #86efac;
+    --del-bg: #33151a;
+    --del-fg: #fca5a5;
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0d0d0f;
+  --bg-panel: #141417;
+  --bg-inset: #1a1a1f;
+  --bg-hover: #212128;
+  --border: #26262d;
+  --border-strong: #3a3a44;
+  --text: #ececf0;
+  --text-muted: #9c9caa;
+  --text-faint: #8f8f9e;
+  --accent: #7aa2ff;
+  --accent-fg: #0d0d0f;
+  --ok: #4ade80;
+  --warn: #fbbf24;
+  --danger: #f87171;
+  --add-bg: #0f2d1c;
+  --add-fg: #86efac;
+  --del-bg: #33151a;
+  --del-fg: #fca5a5;
+
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  /* Only remove the default ring where we provide our own visible focus. */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+  }
+
+  kbd {
+    font-family: var(--mono);
+  }
+}
+
+@layer components {
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 8px;
+    top: -60px;
+    z-index: 100;
+    padding: 10px 16px;
+    background: var(--accent);
+    color: var(--accent-fg);
+    border-radius: var(--radius);
+    font-weight: 600;
+    text-decoration: none;
+    transition: top 120ms ease;
+  }
+
+  .skip-link:focus {
+    top: 8px;
+  }
+
+  .mono {
+    font-family: var(--mono);
+    letter-spacing: -0.01em;
+  }
+
+  /* Only applies where no explicit text size utility is present. */
+  .mono:not([class*="text-["]) {
+    font-size: 0.9em;
+  }
+
+  .panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .rule {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  .stream-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+  }
+
+  .stream-scroll::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .stream-scroll::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 4px;
+  }
+
+  .live-dot {
+    animation: pulse-dot 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* Kept unlayered and !important so it wins over every utility. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
